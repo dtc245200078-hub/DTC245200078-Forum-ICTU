@@ -1,0 +1,21 @@
+# Mat khau va cau hinh bi mat
+.env
+.env.*
+!.env.example
+
+# Sao luu database
+backups/
+
+# Thu vien Node.js
+node_modules/
+**/node_modules/
+
+# Nhat ky va file tam
+*.log
+*.tmp
+.DS_Store
+
+# Khoa va chung chi rieng tu
+*.key
+*.pem
+

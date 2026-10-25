@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forum ICTU - Cộng đồng thảo luận</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #172b4d;
+    }
+    header {
+      background: #174ea6;
+      color: white;
+      padding: 22px 8%;
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .logo { font-size: 27px; font-weight: bold; }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 18px;
+      font-weight: bold;
+    }
+    .hero {
+      margin-top: 30px;
+      padding-bottom: 25px;
+    }
+    .hero h1 { font-size: 34px; margin-bottom: 10px; }
+    .hero p { color: #e0eaff; }
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+    }
+    .panel {
+      background: white;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px #0000000c;
+      margin-bottom: 20px;
+    }
+    h2 { font-size: 21px; margin-top: 0; }
+    .category {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0;
+      text-align: left;
+      background: #edf3ff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #174ea6;
+      font-weight: bold;
+    }
+    .category:hover { background: #dbe7ff; }
+    .post {
+      border-bottom: 1px solid #e6ebf3;
+      padding: 17px 0;
+    }
+    .post:last-child { border-bottom: 0; }
+    .post h3 { color: #174ea6; margin: 0 0 10px; }
+    .post p { line-height: 1.6; white-space: pre-wrap; }
+    .meta { color: #65758a; font-size: 14px; }
+    .badge {
+      display: inline-block;
+      background: #e5f1ff;
+      color: #174ea6;
+      padding: 5px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+    footer {
+      text-align: center;
+      color: #718096;
+      padding: 30px;
+    }
+    @media (max-width: 750px) {
+      main { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 25px; }
+    }
+  </style>
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+<body>
+  <header>
+    <div class="top">
+      <div class="logo">Forum ICTU</div>
+      <nav>
+        <a href="/">Trang chủ</a>
+        <a href="#posts">Bài viết</a>
+        <a href="/create-post.html">+ Tạo bài viết</a>
+        <a href="/account.html">Đăng nhập / Đăng ký</a>
+</nav> 
+    </div>
+    <section class="hero">
+      <h1>Chào mừng đến với cộng đồng ICTU</h1>
+      <p>Chia sẻ kiến thức, đặt câu hỏi và cùng nhau phát triển.</p>
+    </section>
+  </header>
+
+  <main>
+    <aside>
+      <section class="panel">
+        <h2>Danh mục thảo luận</h2>
+        <div id="categories">Đang tải danh mục...</div>
+      </section>
+    </aside>
+
+    <section id="posts">
+      <div class="panel">
+        <h2>Bài viết mới nhất</h2>
+        <div id="postList">Đang tải bài viết...</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Forum ICTU © 2026 - Đề tài số 15
+  </footer>
+
+  <script>
+    async function loadCategories() {
+      const container = document.getElementById("categories");
+
+      try {
+        const response = await fetch("/api/categories");
+        if (!response.ok) throw new Error("API error");
+
+        const result = await response.json();
+        container.replaceChildren();
+
+        for (const category of result.data) {
+          const button = document.createElement("button");
+          button.className = "category";
+          button.textContent = category.name;
+          container.appendChild(button);
+        }
+      } catch (error) {
+        container.textContent = "Không tải được danh mục.";
+      }
+    }
+
+    async function loadPosts() {
+      const container = document.getElementById("postList");
+
+      try {
+        const response = await fetch("/api/posts");
+        if (!response.ok) throw new Error("API error");
+
+        const result = await response.json();
+        container.replaceChildren();
+
+        if (!result.data.length) {
+          container.textContent = "Chưa có bài viết nào.";
+          return;
+        }
+
+        for (const post of result.data) {
+          const article = document.createElement("article");
+          article.className = "post";
+
+          const badge = document.createElement("span");
+          badge.className = "badge";
+          badge.textContent = post.category;
+
+          const title = document.createElement("h3");
+          title.textContent = post.title;
+          title.style.cursor = "pointer";
+          title.addEventListener("click", () => {
+            window.location.href = "/post-detail.html?id=" + post.id;
+          }); 
+
+          const content = document.createElement("p");
+          content.textContent = post.content;
+
+          const meta = document.createElement("div");
+          meta.className = "meta";
+          meta.textContent =
+            "Tác giả: " + post.username +
+            " • " + new Date(post.created_at).toLocaleString("vi-VN");
+
+          article.append(badge, title, content, meta);
+          container.appendChild(article);
+        }
+      } catch (error) {
+        container.textContent = "Không tải được bài viết.";
+      }
+    }
+
+    loadCategories();
+    loadPosts();
+  </script>
+</body>
+<script src="/js/header.js"></script>
+</html>

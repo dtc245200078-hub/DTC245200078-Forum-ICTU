@@ -1,0 +1,282 @@
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-light: #eff6ff;
+  --background: #f5f8ff;
+  --surface: #ffffff;
+  --text: #172554;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(
+      circle at top right,
+      #dbeafe 0,
+      transparent 35%
+    ),
+    var(--background);
+  font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+}
+
+header {
+  background:
+    linear-gradient(
+      120deg,
+      #102d6b 0%,
+      #1d4ed8 60%,
+      #2563eb 100%
+    );
+  padding: 20px 6% 65px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  right: -100px;
+  top: -170px;
+  border-radius: 50%;
+  background: #ffffff12;
+  pointer-events: none;
+}
+
+.top {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #ffffff30;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 25px;
+  letter-spacing: -0.8px;
+}
+
+.logo::before {
+  content: "F";
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: white;
+  color: var(--primary);
+  font-size: 27px;
+  box-shadow: 0 8px 25px #00000020;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 11px 17px;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+nav a:hover {
+  background: #ffffff25;
+}
+
+.hero {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 50px 0 10px;
+}
+
+.hero h1 {
+  max-width: 750px;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.2;
+  letter-spacing: -1.4px;
+  margin-bottom: 18px;
+}
+
+.hero p {
+  max-width: 580px;
+  font-size: 17px;
+  line-height: 1.8;
+  color: #dbeafe;
+}
+
+main {
+  max-width: 1320px;
+  margin: -25px auto 40px;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 285px minmax(0, 1fr);
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 25px;
+  border-radius: var(--radius);
+  box-shadow:
+    0 10px 35px #1e3a8a0a;
+  margin-bottom: 20px;
+}
+
+.panel h2 {
+  font-size: 20px;
+  margin: 0 0 22px;
+  color: #0f2557;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #334155;
+  padding: 15px;
+  margin: 5px 0;
+  border-radius: 12px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.category::before {
+  content: "#";
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.category:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+  border-color: #dbeafe;
+  transform: translateX(3px);
+}
+
+.post {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+}
+
+.post:first-child {
+  padding-top: 5px;
+}
+
+.post:last-child {
+  border-bottom: 0;
+}
+
+.post h3 {
+  color: #123c87;
+  font-size: 21px;
+  line-height: 1.4;
+  margin: 10px 0;
+}
+
+.post p {
+  color: #475569;
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 14px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 11px;
+}
+
+footer {
+  margin-top: 60px;
+  padding: 35px 20px;
+  color: var(--muted);
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 800px) {
+  header {
+    padding: 16px 20px 55px;
+  }
+
+  .top {
+    align-items: flex-start;
+  }
+
+  nav {
+    flex-wrap: wrap;
+  }
+
+  .hero {
+    padding-top: 30px;
+  }
+
+  main {
+    grid-template-columns: 1fr;
+    padding: 0 15px;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 21px;
+  }
+
+  nav a {
+    padding: 9px 11px;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+}
+

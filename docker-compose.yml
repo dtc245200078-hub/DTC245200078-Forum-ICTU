@@ -1,0 +1,78 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: forum_db
+      MYSQL_USER: forum_user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - forum_mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - forum_backend
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - mysqladmin ping -h localhost -u root -p"$$MYSQL_ROOT_PASSWORD"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - "127.0.0.1:8081:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+
+      - forum_backend
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      DB_HOST: mysql
+      DB_NAME: forum_db
+      DB_USER: forum_user
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "127.0.0.1:3001:3000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - forum_frontend
+      - forum_backend
+
+  nginx:
+    image: nginxinc/nginx-unprivileged:1.27-alpine
+    ports:
+      - "8088:8080"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - forum_frontend
+
+    restart: unless-stopped
+volumes:
+  forum_mysql_data:
+
+networks:
+  forum_backend:
+    driver: bridge
+  forum_frontend:
+    driver: bridge

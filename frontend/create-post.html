@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tạo bài viết - Forum ICTU</title>
+  <link rel="stylesheet" href="/css/theme.css">
+
+  <style>
+    .create-container {
+      width: 100%;
+      max-width: 850px;
+      margin: 45px auto;
+      padding: 0 20px;
+      display: block;
+    }
+
+    .create-card {
+      background: white;
+      padding: 35px;
+      border-radius: 18px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 12px 35px #1e3a8a10;
+    }
+
+    .create-card h1 {
+      color: #172554;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #64748b;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 9px;
+      color: #334155;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+      background: white;
+    }
+
+    .form-group textarea {
+      min-height: 220px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px #dbeafe;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 22px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .message {
+      margin-bottom: 20px;
+      padding: 13px;
+      border-radius: 9px;
+      display: none;
+    }
+
+    .message.error {
+      display: block;
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .message.success {
+      display: block;
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    @media (max-width: 600px) {
+      .create-card {
+        padding: 23px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="top">
+      <div class="logo">Forum ICTU</div>
+
+      <nav>
+        <a href="/">Trang chủ</a>
+        <a href="/account.html">Tài khoản</a>
+      </nav>
+    </div>
+
+    <section class="hero">
+      <h1>Chia sẻ kiến thức của bạn</h1>
+      <p>
+        Tạo chủ đề mới và kết nối với cộng đồng ICTU.
+      </p>
+    </section>
+  </header>
+
+  <main class="create-container">
+    <section class="create-card">
+      <h1>Tạo bài viết mới</h1>
+
+      <p class="subtitle">
+        Điền thông tin dưới đây để chia sẻ bài viết.
+      </p>
+
+      <div id="message" class="message" role="status"></div>
+
+      <form id="postForm">
+        <div class="form-group">
+          <label for="title">Tiêu đề bài viết</label>
+
+          <input
+            type="text"
+            id="title"
+            placeholder="Nhập tiêu đề bài viết..."
+            minlength="5"
+            maxlength="255"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="category">Danh mục</label>
+
+          <select id="category" required>
+            <option value="">Chọn danh mục</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="content">Nội dung bài viết</label>
+
+          <textarea
+            id="content"
+            placeholder="Chia sẻ nội dung của bạn..."
+            minlength="10"
+            required
+          ></textarea>
+        </div>
+
+        <div class="actions">
+          <a href="/" class="btn btn-secondary">Hủy</a>
+
+          <button
+            type="submit"
+            id="submitBtn"
+            class="btn btn-primary"
+          >
+            Đăng bài viết
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="/js/create-post.js"></script>
+</body>
+</html>

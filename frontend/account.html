@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tài khoản - Forum ICTU</title>
+  <link rel="stylesheet" href="/css/theme.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .auth-header {
+      padding: 20px 6%;
+    }
+
+    .auth-main {
+      display: block;
+      width: 100%;
+      max-width: 500px;
+      margin: 55px auto;
+      padding: 0 20px;
+    }
+
+    .auth-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: 0 20px 55px #1e3a8a18;
+    }
+
+    .auth-card h1 {
+      text-align: center;
+      font-size: 28px;
+      margin: 0 0 12px;
+      color: #172554;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 26px;
+      line-height: 1.6;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 5px;
+      background: #eff6ff;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    .tab {
+      padding: 12px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: #64748b;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px #dbeafe;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .message {
+      display: none;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+
+    .message.error {
+      display: block;
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .message.success {
+      display: block;
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    @media (max-width: 480px) {
+      .auth-card {
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="auth-header">
+    <div class="top">
+      <div class="logo">Forum ICTU</div>
+      <nav>
+        <a href="/">Trang chủ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-card">
+      <h1>Chào mừng trở lại</h1>
+      <p class="subtitle">
+        Đăng nhập hoặc tạo tài khoản để tham gia cộng đồng.
+      </p>
+
+      <div class="tabs">
+        <button id="loginTab" class="tab active" type="button">
+          Đăng nhập
+        </button>
+        <button id="registerTab" class="tab" type="button">
+          Đăng ký
+        </button>
+      </div>
+
+      <div id="message" class="message" role="status"></div>
+
+      <form id="authForm">
+        <div id="usernameField" class="field hidden">
+          <label for="username">Tên người dùng</label>
+          <input
+            id="username"
+            type="text"
+            minlength="3"
+            maxlength="100"
+            autocomplete="username"
+          >
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="password">Mật khẩu</label>
+          <input
+            id="password"
+            type="password"
+            minlength="8"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <button id="submitBtn" class="submit-btn" type="submit">
+          Đăng nhập
+        </button>
+      </form>
+
+      <a class="back-link" href="/">← Quay về trang chủ</a>
+    </section>
+  </main>
+
+  <script src="/js/account.js"></script>
+</body>
+</html>
