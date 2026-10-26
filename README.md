@@ -36,3 +36,36 @@ ho tro chia se kien thuc, trao doi va thao luan.
 ## Giam sat va nhat ky
 Prometheus, Grafana, Loki va Promtail se duoc bo sung
 trong cac giai doan tiep theo.
+
+### Prometheus
+- Thu thap metrics tu cac container Docker.
+- Giam sat tai nguyen CPU, RAM.
+- Theo doi Nginx, MySQL va Ubuntu thong qua exporters.
+- Truy cap: http://localhost:9090
+
+### Grafana
+- Truc quan hoa metrics tu Prometheus.
+- Dashboard: Forum ICTU - System Monitoring.
+- Hien thi tinh trang dich vu, CPU, RAM va MySQL.
+- Truy cap: http://localhost:3000
+
+### Loki va Promtail
+- Promtail thu thap log cua cac container Docker.
+- Loki luu tru va cho phep truy van log.
+- Grafana Explore duoc su dung de tim kiem log.
+
+### Truy van LogQL
+
+1. Xem toan bo log Docker:
+   {job="forum-docker"}
+
+2. Loc cac dong log loi:
+   {job="forum-docker"} |~ "(?i)error"
+
+3. Thong ke so dong log trong 5 phut:
+   sum(count_over_time({job="forum-docker"}[5m]))
+
+### Khoi dong he thong giam sat
+
+docker compose up -d
+docker compose ps
