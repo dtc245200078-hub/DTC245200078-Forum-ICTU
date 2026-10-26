@@ -91,7 +91,30 @@ services:
       - forum_grafana_data:/var/lib/grafana
     networks:
       - forum_frontend
-  cadvisor:
+  loki:
+    image: grafana/loki:3.5.0
+    restart: unless-stopped
+    command:
+      - "-config.file=/etc/loki/loki-config.yml"
+    volumes:
+      - ./monitoring/loki/loki-config.yml:/etc/loki/loki-config.yml:ro
+      - forum_loki_data:/loki
+    networks:
+      - forum_frontend
+
+  promtail:
+    image: grafana/promtail:3.5.0
+    restart: unless-stopped
+    command:
+      - "-config.file=/etc/promtail/promtail-config.yml"
+    volumes:
+      - ./monitoring/promtail/promtail-config.yml:/etc/promtail/promtail-config.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    depends_on:
+      - loki
+    networks:
+      - forum_frontend
+  cadvisor: 
     image: ghcr.io/google/cadvisor:0.54.0
     command:
       - "--disable_metrics=disk"
@@ -141,6 +164,7 @@ volumes:
   forum_mysql_data:
   forum_prometheus_data:
   forum_grafana_data:
+  forum_loki_data:
 
 networks:
   forum_backend:
